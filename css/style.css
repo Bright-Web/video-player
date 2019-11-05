@@ -1,0 +1,12 @@
+body{
+    background: #f1f1f1;
+}
+.shadowed{
+    background-color: #fff;
+    box-shadow: 0 0 5px 3px #0000001c;
+}
+
+.navbar-brand{
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
