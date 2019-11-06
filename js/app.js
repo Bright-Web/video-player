@@ -1,17 +1,31 @@
 $(document).ready(function(){
 
-    const videoList = $('#videoList'),
-    player = $('#player');
+    const EL_VIDEO_LIST = $('#videoList'),
+    EL_PLAYER = $('#player'),
+    EL_SEARCH_BOX = $('#searchBox'),
+    EL_CATEGORIES_LIST = $('.categoriesList')
+    ;
 
+    let videosArr = [];
+
+    
     function init () {
         $.getJSON('json/videos.json', function(data){
             $('.lightbox').hide();
-            displayVideos(data.videos);
-            addListeners();
+            videosArr = data.videos;
+            displayVideos(videosArr);
+        });
+
+        $.getJSON('json/categories.json', function(data) {
+            let categoriesArr = data.categories;
+            displayCategories(categoriesArr);
+        });
+
+        EL_SEARCH_BOX.on('keyup', function(event){
+            event.preventDefault();
+            displayVideosByTitle($(this).val())
         });
     }
-
-
 
     function displayVideos (videos) {
         let string = ""
@@ -19,12 +33,13 @@ $(document).ready(function(){
             getVideoHTML(video)
             string += getVideoHTML(video)
         })
-        videoList.html(string)
+        EL_VIDEO_LIST.html(string)
+        addClickListeners();
     }
 
     function getVideoHTML(video) {
         return `
-        <div class='videoItem' data-id='${video.id}'>
+        <div class='videoItem shadowed' data-id='${video.id}'>
             <div>
                 <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="video-thumbnail">
             </div>
@@ -36,7 +51,7 @@ $(document).ready(function(){
         `
     }
 
-    function addListeners () {
+    function addClickListeners () {
         $('.videoItem').on('click', function () {
             let videoId = $(this).data('id')
             playVideo(videoId)
@@ -49,11 +64,42 @@ $(document).ready(function(){
     }
 
     function playVideo (id) {
-        player.attr('src', `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&autoplay=1`)
+        EL_PLAYER.attr('src', `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&autohide=1&showinfo=0&autoplay=1`)
     }
     function stopVideo (id) {
-        player.attr('src', ``)
+        EL_PLAYER.attr('src', ``)
     }
+
+
+    function displayVideosByTitle (title) {
+        let filteredVideos = [];
+        $.each(videosArr, function(i, video){
+            if(video.title.includes(title)){
+                filteredVideos.push(video);
+            }  
+        });
+        displayVideos(filteredVideos)
+    }
+
+    function displayCategories (categoriesArr) {
+        let string = "";
+        $.each(categoriesArr, function(i, category){
+            string += getCategoriesHtml(category);
+        });
+        EL_CATEGORIES_LIST.html(string);
+
+    }
+
+    function getCategoriesHtml (category) {
+        return `
+        <li class="nav-item">
+            <a class="nav-link" href="#">${category.title}</a>
+        </li>
+        `
+    }
+
+
+
 
     init()
 

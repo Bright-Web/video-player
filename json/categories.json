@@ -1,0 +1,26 @@
+{
+    "categories": [
+
+        {
+            "id" : 1,
+            "slug" : "seinfeld",
+            "title" : "Seinfeld"
+        },
+        {
+            "id" : 2,
+            "slug" : "father-ted",
+            "title" : "Father Ted"
+        },
+        {
+            "id" : 3,
+            "slug" : "silicon-valley",
+            "title" : "Silicon Valley"
+        },
+        {
+            "id" : 4,
+            "slug" : "the-office",
+            "title" : "The Office"
+        }
+
+    ]
+}
