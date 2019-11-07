@@ -23,7 +23,16 @@ $(document).ready(function(){
 
         EL_SEARCH_BOX.on('keyup', function(event){
             event.preventDefault();
-            displayVideosByTitle($(this).val())
+
+            if(event.which === 13){
+                let video = getVideoById($(this).val())    
+                if (video){
+                    displayVideos([video])
+                }else{
+                    displayVideosByTitle($(this).val())
+                }            
+            }
+
         });
     }
 
@@ -39,7 +48,7 @@ $(document).ready(function(){
 
     function getVideoHTML(video) {
         return `
-        <div class='videoItem shadowed' data-id='${video.id}'>
+        <div class='videoItem' data-id='${video.id}'>
             <div>
                 <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="video-thumbnail">
             </div>
@@ -87,18 +96,43 @@ $(document).ready(function(){
             string += getCategoriesHtml(category);
         });
         EL_CATEGORIES_LIST.html(string);
+        addCategoryListeners()
 
     }
 
     function getCategoriesHtml (category) {
         return `
         <li class="nav-item">
-            <a class="nav-link" href="#">${category.title}</a>
+            <a class="nav-link categoryItem" href="#" data-category="${category.title}">${category.title}</a>
         </li>
         `
     }
 
+    function addCategoryListeners () {
+        $('.categoryItem').on('click', function () {
+            let category = $(this).data('category');
+            displayVideosByCategory(category);
+        })
+    }
 
+    function displayVideosByCategory (category) {
+        let filteredVideos = [];
+        $.each(videosArr, function(i, video){
+            if(category === video.category){
+                filteredVideos.push(video);
+            }
+        });
+        displayVideos(filteredVideos);
+    }
+
+    function getVideoById (input) {
+        for (let i = 0; i < videosArr.length; i++) {
+            if (input === videosArr[i].id) {
+                return videosArr[i]
+            }            
+        }
+        return null
+    }
 
 
     init()

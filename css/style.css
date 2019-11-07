@@ -13,7 +13,7 @@ a {
 
 .shadowed{
     background-color: #fff;
-    box-shadow: 0 0 5px 3px #0000001c;
+    box-shadow: 0px 0px 4px 0px #00000033;
 }
 
 .navbar-brand{
@@ -22,24 +22,24 @@ a {
 }
 
 .videoItem {
-    display: flex;
+    display: grid;
     background-color: #efefef;
-    padding: 30px;
     cursor: pointer;
+    grid-template-columns: 1fr 1fr;
 }
 
 .videoItem img{
-    max-height: 150px;
+    max-width: 100%;
 }
 
 #videoList {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
+    grid-gap: 1.5rem;
 }
 
 .videoInfo {
-    padding: 0 20px;
+    padding: 20px;
 }
 
 .lightbox {
@@ -62,7 +62,7 @@ a {
     #videoList {
         display: grid;
         grid-template-columns: 1fr;
-        grid-gap: 0.5rem;
+        grid-gap: 1rem;
         overflow: hidden;
     }
     iframe#player {
@@ -73,12 +73,11 @@ a {
     .videoItem {
         display: flex;
         background-color: #efefef;
-        padding: 30px;
         cursor: pointer;
         flex-direction: column;
     }
     .videoInfo {
-        padding: 0;
+        padding: 20px;
     }
     .videoItem img {
         max-height: none;
