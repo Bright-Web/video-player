@@ -3,7 +3,9 @@ $(document).ready(function(){
     const EL_VIDEO_LIST = $('#videoList'),
     EL_PLAYER = $('#player'),
     EL_SEARCH_BOX = $('#searchBox'),
-    EL_CATEGORIES_LIST = $('.categoriesList')
+    EL_CATEGORIES_LIST = $('.categoriesList'),
+    EL_NAV_ITEM = $('.nav-link'),
+    EL_SCREENS = $('.screen')
     ;
 
     let videosArr = [];
@@ -34,6 +36,8 @@ $(document).ready(function(){
             }
 
         });
+        EL_NAV_ITEM.on('click', switchScreens);
+
     }
 
     function displayVideos (videos) {
@@ -137,7 +141,11 @@ $(document).ready(function(){
 
     init()
 
+    function switchScreens () {
+        EL_SCREENS.hide();
+        $('#' + $(this).data('screen')).show();
 
+    }
 
 
 })
